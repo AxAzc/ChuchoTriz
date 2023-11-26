@@ -15,7 +15,13 @@ function App() {
   const showHidePresets = async () => {
     const instrumentoText = matriz.getInstrumentoText();
     if (instrumento !== instrumentoText) {
-      console.log("Instrument changed previous: '" + instrumento + "' new: '" + instrumentoText + "'");
+      console.log(
+        "Instrument changed previous: '" +
+          instrumento +
+          "' new: '" +
+          instrumentoText +
+          "'"
+      );
       if (matriz.instrumentAndPriceHasValues()) {
         console.log("Show Presets for " + instrumentoText);
         const ticker = matriz.getTicker();
@@ -39,7 +45,9 @@ function App() {
 
   function getCantidadText(cantidad: number): string {
     if (cantidad > 1000) {
-      return `${cantidad / 1000}k`;
+      if (cantidad % 1000 == 0) {
+        return `${cantidad / 1000}k`;
+      }
     }
     return cantidad.toString();
   }
@@ -51,11 +59,30 @@ function App() {
       {presets.map((item) => (
         <button
           type="button"
-          onClick={() => matriz.setSize(item.cantidad, item.mostrar)}
-          className="ant-btn ant-btn-primary ant-btn-sm OrderButton ButtonLimpiar ButtonPreset"
+          onClick={() => {
+            matriz.setSize(item.cantidad, item.mostrar);
+            matriz.clickComprar();
+          }}
+          className="ant-btn ant-btn-primary ant-btn-sm OrderButton ButtonComprar ButtonPreset"
         >
           <span>
-            {getCantidadText(item.cantidad)}{item.mostrar > 0 && "/" + getCantidadText(item.mostrar)}
+            {getCantidadText(item.cantidad)}
+            {item.mostrar > 0 && "/" + getCantidadText(item.mostrar)}
+          </span>
+        </button>
+      ))}
+      {presets.map((item) => (
+        <button
+          type="button"
+          onClick={() => {
+            matriz.setSize(item.cantidad, item.mostrar);
+            matriz.clickVender();
+          }}
+          className="ant-btn ant-btn-primary ant-btn-sm OrderButton ButtonVender ButtonPreset"
+        >
+          <span>
+            {getCantidadText(item.cantidad)}
+            {item.mostrar > 0 && "/" + getCantidadText(item.mostrar)}
           </span>
         </button>
       ))}

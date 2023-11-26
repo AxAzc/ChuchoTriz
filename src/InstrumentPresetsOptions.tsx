@@ -22,8 +22,7 @@ function InstrumentPresets() {
       presetsText += key;
       for (let preset of instrumentPresets) {
         presetsText += " " + preset.cantidad;
-        if (preset.mostrar > 0)
-        {
+        if (preset.mostrar > 0) {
           presetsText += "/" + preset.mostrar;
         }
       }
@@ -35,7 +34,7 @@ function InstrumentPresets() {
   function SavePresets() {
     var presets: IInstrumentPresets = {};
 
-    try{
+    try {
       var lines = instrumentPresets.split("\n");
       for (let line of lines) {
         if (line.trim() !== "") {
@@ -52,8 +51,7 @@ function InstrumentPresets() {
               const cantidad = Number.parseInt(cantidades[0]);
               if (Number.isNaN(cantidad) == false) {
                 let mostrar = Number.parseInt(cantidades[1]);
-                if (Number.isNaN(mostrar))
-                {
+                if (Number.isNaN(mostrar)) {
                   mostrar = 0;
                 }
                 presetValues.push({ cantidad: cantidad, mostrar: mostrar });
@@ -66,8 +64,7 @@ function InstrumentPresets() {
       console.log("Presets: " + JSON.stringify(presets));
       instrumentPresetsRepository.save(presets);
       window.close();
-    }
-    catch (error){
+    } catch (error) {
       console.error(error);
       alert(error);
     }
@@ -84,9 +81,7 @@ function InstrumentPresets() {
       <div>
         <strong>Sintaxis:</strong>
       </div>
-      <pre>
-        Instrumento Cantidad/Cantidad_A_Mostrar Cantidad
-      </pre>
+      <pre>Instrumento Cantidad/Cantidad_A_Mostrar Cantidad</pre>
       Ejemplos:
       <pre>
         <pre>AL30 200000/25000 100000/10000 50000</pre>
